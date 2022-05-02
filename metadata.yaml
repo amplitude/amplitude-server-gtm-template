@@ -1,0 +1,7 @@
+homepage: "https://www.amplitude.com/"
+documentation: "https://developers.amplitude.com/docs/http-api-v2"
+versions:
+  # Latest version
+  - sha: 30110d7bbc5b3b2cb0be7910bc5c39a84d77d507
+    changeNotes: Initial release
+  # Older versions
