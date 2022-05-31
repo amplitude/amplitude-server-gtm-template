@@ -2,6 +2,8 @@ homepage: "https://www.amplitude.com/"
 documentation: "https://developers.amplitude.com/docs/http-api-v2"
 versions:
   # Latest version
+  - sha: 0d97a1f33383400cad024de6a5d98af0b37e9cad
+    changeNotes: Fix forEach error related to empty event type map.
+  # Older versions
   - sha: 30110d7bbc5b3b2cb0be7910bc5c39a84d77d507
     changeNotes: Initial release
-  # Older versions
