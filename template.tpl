@@ -161,6 +161,14 @@ ___TEMPLATE_PARAMETERS___
     "groupStyle": "ZIPPY_OPEN",
     "subParams": [
       {
+        "type": "CHECKBOX",
+        "name": "trackUtms",
+        "checkboxText": "Automatically Track UTM Parameters",
+        "simpleValueType": true,
+        "help": "Check this box to automatically collect \u003cstrong\u003eutm_source, utm_medium, utm_campaign, utm_term\u003c/strong\u003e and \u003cstrong\u003eutm_content\u003c/strong\u003e from the page URL parameters into User Properties of the same name. \u003ca href\u003d\"https://developers.amplitude.com/docs/javascript#track-utm-parameters\" target\u003d\"_blank\"\u003eRead more here\u003c/a\u003e.",
+        "defaultValue": false
+      },
+      {
         "type": "SIMPLE_TABLE",
         "name": "userProps",
         "displayName": "Map User Properties",
@@ -258,6 +266,7 @@ const JSON = require('JSON');
 const log = require('logToConsole');
 const makeInteger = require('makeInteger');
 const makeTableMap = require('makeTableMap');
+const parseUrl = require('parseUrl');
 const sendHttpRequest = require('sendHttpRequest');
 
 const HTTP_ENDPOINT = data.euServer ? 'https://api.eu.amplitude.com/2/httpapi' : 'https://api2.amplitude.com/2/httpapi';
@@ -300,6 +309,15 @@ const getEventProps = () => {
 
 const getUserProps = () => {
   const props = {};
+  // Automatically collect UTMs
+  if (data.trackUtms) {
+    const parsedUrl = parseUrl(getEventData('page_location')) || {searchParams: {}};
+    props.utm_source = parsedUrl.searchParams.utm_source;
+    props.utm_medium = parsedUrl.searchParams.utm_medium;
+    props.utm_campaign = parsedUrl.searchParams.utm_campaign;
+    props.utm_term = parsedUrl.searchParams.utm_term;
+    props.utm_content = parsedUrl.searchParams.utm_content;
+  }
   if (data.userProps && data.userProps.length) {
     data.userProps.forEach(p => {
       if (getEventData(p.key)) props[(p.mapKey || p.key)] = getEventData(p.key);
