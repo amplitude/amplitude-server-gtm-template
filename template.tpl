@@ -373,7 +373,7 @@ sendHttpRequest(HTTP_ENDPOINT, (statusCode, headers, body) => {
   } else {
     data.gtmOnSuccess();
   }
-}, {headers: {'content-type': 'application/json'}, method: 'POST', timeout: 1000}, JSON.stringify(postBody));
+}, {headers: {'content-type': 'application/json'}, method: 'POST', timeout: 1500}, JSON.stringify(postBody));
 
 
 ___SERVER_PERMISSIONS___
