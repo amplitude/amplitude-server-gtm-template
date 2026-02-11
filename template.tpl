@@ -278,7 +278,7 @@ const userIp = data.hideIp ? '$remote' : getRemoteAddress();
 const userId = getEventData('user_id') || getEventData(GA4_USER_PREFIX + 'user_id') || undefined;
 const deviceId = getEventData('client_id');
 const sessionId = makeInteger(getEventData('ga_session_id') + '000');
-const timestamp = getTimestampMillis();
+const timestamp = getEventData('timestamp') || getTimestampMillis();
 const eventName = getEventData('event_name');
 const newEventProperties = data.newEventProperties && data.newEventProperties.length ? makeTableMap(data.newEventProperties, 'key', 'value') : {};
 const newUserProperties = data.newUserProperties && data.newUserProperties.length ? makeTableMap(data.newUserProperties, 'key', 'value') : {};
@@ -290,7 +290,7 @@ const logAmplitude = msg => {
 
 const mergeObj = (fromObj, toObj) => {
   for (let key in fromObj) {
-    if (fromObj.hasOwnProperty(key)) {
+    if (fromObj.hasOwnProperty(key) && fromObj[key] !== null && fromObj[key] !== undefined) {
       toObj[key] = fromObj[key];
     }
   }
@@ -373,7 +373,7 @@ sendHttpRequest(HTTP_ENDPOINT, (statusCode, headers, body) => {
   } else {
     data.gtmOnSuccess();
   }
-}, {headers: {'content-type': 'application/json'}, method: 'POST', timeout: 1000}, JSON.stringify(postBody));
+}, {headers: {'content-type': 'application/json'}, method: 'POST', timeout: 5000}, JSON.stringify(postBody));
 
 
 ___SERVER_PERMISSIONS___
