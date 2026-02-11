@@ -2,8 +2,6 @@ homepage: "https://www.amplitude.com/"
 documentation: "https://developers.amplitude.com/docs/http-api-v2"
 versions:
   # Latest version
-  - sha: xxx
-    changeNotes: Clearing undefined and null values from payload, added support to set the timestamp client side, increased api timeout to 5 seconds.
   - sha: e92b42d40ef51178d9bf14909e328eee746c6919
     changeNotes: Add option to automatically track UTM parameters as user properties.
   - sha: 0d97a1f33383400cad024de6a5d98af0b37e9cad
