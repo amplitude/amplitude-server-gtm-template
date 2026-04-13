@@ -122,7 +122,7 @@ sendHttpRequest(
     return data.gtmOnFailure();
   }
   return data.gtmOnSuccess();
-}, (rejectedValue) => {
+}).catch((rejectedValue) => {
   logAmplitude('Request failed with ' + JSON.stringify(rejectedValue));
   return data.gtmOnFailure();
 });
