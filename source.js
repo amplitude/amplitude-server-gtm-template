@@ -14,7 +14,7 @@ const GA4_USER_PREFIX = 'x-ga-mp2-user_properties.';
 const LOG_PREFIX = '[Amplitude] ';
 
 const apiKey = data.apiKey;
-const userIp = data.hideIp ? '$remote' : getRemoteAddress();
+const userIp = data.hideIp ? '$remote' : (getEventData('ip_override') || getRemoteAddress());
 const userId = getEventData('user_id') || getEventData(GA4_USER_PREFIX + 'user_id') || undefined;
 const deviceId = getEventData('client_id');
 const sessionId = makeInteger(getEventData('ga_session_id') + '000');
@@ -107,10 +107,22 @@ const postBody = {
   events: [finalEvent]
 }; 
 
-sendHttpRequest(HTTP_ENDPOINT, (statusCode, headers, body) => {
+sendHttpRequest(
+  HTTP_ENDPOINT, {
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST',
+    timeout: 5000
+  },
+  JSON.stringify(postBody)
+).then((result) => {
+  const statusCode = result.statusCode;
   if (statusCode >= 400) {
-    data.gtmOnFailure();
-  } else {
-    data.gtmOnSuccess();
+    return data.gtmOnFailure();
   }
-}, {headers: {'content-type': 'application/json'}, method: 'POST', timeout: 5000}, JSON.stringify(postBody));
+  return data.gtmOnSuccess();
+}).catch((error) => {
+  logAmplitude('Request failed with ' + JSON.stringify(error));
+  return data.gtmOnFailure();
+});
