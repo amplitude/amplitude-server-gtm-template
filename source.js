@@ -20,6 +20,8 @@ const deviceId = getEventData('client_id');
 const sessionId = makeInteger(getEventData('ga_session_id') + '000');
 const timestamp = getEventData('timestamp') || getTimestampMillis();
 const eventName = getEventData('event_name');
+const defaultInsertId = deviceId + eventName + timestamp;
+const customInsertId = data.overrideDefaultInsertId && data.customInsertId !== undefined && data.customInsertId !== null && data.customInsertId !== '' ? '' + data.customInsertId : null;
 const newEventProperties = data.newEventProperties && data.newEventProperties.length ? makeTableMap(data.newEventProperties, 'key', 'value') : {};
 const newUserProperties = data.newUserProperties && data.newUserProperties.length ? makeTableMap(data.newUserProperties, 'key', 'value') : {};
 const additionalProperties = data.additionalProperties && data.additionalProperties.length ? makeTableMap(data.additionalProperties, 'key', 'value') : {};
@@ -91,7 +93,7 @@ const baseEvent = {
   user_properties: getUserProps(),
   ip: userIp,
   session_id: sessionId,
-  insert_id: deviceId + eventName + timestamp
+  insert_id: customInsertId || defaultInsertId
 };
 
 if (userId) baseEvent.user_id = userId;
