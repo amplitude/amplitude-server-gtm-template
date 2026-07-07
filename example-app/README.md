@@ -158,7 +158,7 @@ docker compose up -d
 # 3. Start the example app
 node server.js
 
-# 4. Open https://localhost:3000 and click the buttons   (note: httpS)
+# 4. Open https://localhost:3000 and click the buttons   (note: HTTPS)
 ```
 
 ## Debugging in Tag Assistant
