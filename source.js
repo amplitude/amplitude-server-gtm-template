@@ -91,7 +91,7 @@ const baseEvent = {
   user_properties: getUserProps(),
   ip: userIp,
   session_id: sessionId,
-  insert_id: deviceId + eventName + timestamp
+  insert_id: data.customInsertID ? data.customInsertID : deviceId + eventName + timestamp
 };
 
 if (userId) baseEvent.user_id = userId;
