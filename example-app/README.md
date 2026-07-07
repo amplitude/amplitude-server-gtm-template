@@ -140,11 +140,12 @@ Amplitude tag shows up in preview), and a hit without it exercises the
 ## Run it
 
 ```sh
+cd example-app
+
 # 0. One-time: generate the local TLS cert. The certs/ directory is
 #    gitignored — every machine generates its own.
 #    Install mkcert first if needed: brew install mkcert && mkcert -install
 mkdir -p certs
-mkcert -cert-file certs/localhost.pem -key-file certs/localhost-key.pem localhost 127.0.0.1
 
 # 1. One-time: point the stack at YOUR server GTM container. Copy the
 #    example env file and set CONTAINER_CONFIG (the base64 string from the
