@@ -2,11 +2,11 @@
 
 A minimal setup for testing this repo's Amplitude tag template locally:
 
-- `**docker-compose.yml**` — runs Google's official server-side GTM image as a
-tagging server on `localhost:8080` and a debug/preview server on
-`localhost:8081` (both loaded with container `GTM-XXXXXXX`), plus a small
-Caddy sidecar (`preview-tls`) that TLS-fronts the preview server so the
-tagging server can forward preview hits to it.
+- **`docker-compose.yml`** — runs Google's official server-side GTM image as a
+  tagging server on `localhost:8080` and a debug/preview server on
+  `localhost:8081` (both loaded with container `GTM-XXXXXXX`), plus a small
+  Caddy sidecar (`preview-tls`) that TLS-fronts the preview server so the
+  tagging server can forward preview hits to it.
 - `**index.html` / `server.js**` — a one-page app on `https://localhost:3000`
 with buttons that fire GA4-format hits (`page_view`, `sign_up`, `purchase`,
 `button_click`) at the tagging server's `/g/collect` endpoint. The GA4 client
