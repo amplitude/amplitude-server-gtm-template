@@ -2,6 +2,8 @@ homepage: "https://www.amplitude.com/"
 documentation: "https://developers.amplitude.com/docs/http-api-v2"
 versions:
   # Latest version
+  - sha: 6d005f6cbc01a0560a33debb201f9dc6895a28b8
+    changeNotes: Added the option to set a custom Insert ID.
   - sha: 79537b60fe8bd9d89584ca5fe70076069b60bd4c
     changeNotes: Use ip_override from event data to set IP AND catch failed requests to avoid ssgtm crashloops.
   - sha: 5790ceee337df220b89555fc097f5fdbb2ea0412
