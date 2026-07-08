@@ -1,0 +1,5 @@
+# Local TLS certs are generated per-machine with mkcert (see README) — never commit them
+certs/
+
+# Holds your GTM container's CONTAINER_CONFIG (see .env.example) — never commit it
+.env

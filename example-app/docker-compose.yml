@@ -1,0 +1,33 @@
+services:
+  # Debug/preview server — pair with Tag Assistant preview in the GTM UI
+  preview:
+    image: gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable
+    platform: linux/amd64
+    environment:
+      CONTAINER_CONFIG: ${CONTAINER_CONFIG:?set CONTAINER_CONFIG in example-app/.env — see .env.example}
+      RUN_AS_PREVIEW_SERVER: "true"
+    ports:
+      - "8081:8080"
+
+  # The tagging server insists PREVIEW_SERVER_URL is https://, but the preview
+  # server only speaks plain HTTP — this Caddy sidecar terminates TLS in front
+  # of it (self-signed internal cert, hence NODE_TLS_REJECT_UNAUTHORIZED below)
+  preview-tls:
+    image: caddy:2
+    command: caddy reverse-proxy --from https://preview-tls --to http://preview:8080 --internal-certs
+    depends_on:
+      - preview
+
+  # Tagging server — receives events from the example app; forwards hits that
+  # carry the X-Gtm-Server-Preview header to the preview server for debugging
+  tagging:
+    image: gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable
+    platform: linux/amd64
+    environment:
+      CONTAINER_CONFIG: ${CONTAINER_CONFIG:?set CONTAINER_CONFIG in example-app/.env — see .env.example}
+      PREVIEW_SERVER_URL: https://preview-tls
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - preview-tls
