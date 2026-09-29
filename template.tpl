@@ -413,15 +413,21 @@ if (!eventType) {
   return data.gtmOnSuccess();
 }
 
+const eventTime = data.customTimestamp
+  ? makeInteger(data.customTimestamp)
+  : timestamp;
+
 const baseEvent = {
   device_id: deviceId,
   event_type: eventType,
-  time: (data.customTimestamp ? data.customTimestamp : timestamp),
+  time: eventTime,
   event_properties: getEventProps(),
   user_properties: getUserProps(),
   ip: userIp,
   session_id: sessionId,
-  insert_id: (data.customInsertID ? data.customInsertID : deviceId + eventName + timestamp)
+  insert_id: data.customInsertID
+    ? data.customInsertID
+    : deviceId + eventName + eventTime
 };
 
 if (userId) baseEvent.user_id = userId;
