@@ -2,6 +2,8 @@ homepage: "https://www.amplitude.com/"
 documentation: "https://developers.amplitude.com/docs/http-api-v2"
 versions:
   # Latest version
+  - sha: f9200e009bd06b2c9c45391618b31313c1b5bfa0
+    changeNotes: Added support for a custom event timestamp and grouped related configuration fields.
   - sha: 6d005f6cbc01a0560a33debb201f9dc6895a28b8
     changeNotes: Added the option to set a custom Insert ID.
   - sha: 79537b60fe8bd9d89584ca5fe70076069b60bd4c
